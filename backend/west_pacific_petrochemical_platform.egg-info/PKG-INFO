@@ -1,0 +1,218 @@
+Metadata-Version: 2.4
+Name: west-pacific-petrochemical-platform
+Version: 0.1.0
+Summary: 基于大模型的AI应用平台
+Author-email: haoy <hyzl156@126.com>
+Keywords: ai,llm,rag,langchain,langgraph,agent
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.115.0
+Requires-Dist: uvicorn[standard]>=0.30.0
+Requires-Dist: gunicorn>=22.0.0
+Requires-Dist: python-multipart>=0.0.9
+Requires-Dist: websockets>=12.0
+Requires-Dist: sse-starlette>=2.1.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: aiofiles>=24.1.0
+Requires-Dist: python-jose[cryptography]>=3.3.0
+Requires-Dist: passlib[bcrypt]>=1.7.4
+Requires-Dist: cryptography>=43.0.0
+Requires-Dist: itsdangerous>=2.2.0
+Requires-Dist: sqlalchemy[asyncio]>=2.0.36
+Requires-Dist: alembic>=1.13.0
+Requires-Dist: asyncpg>=0.30.0
+Requires-Dist: psycopg2-binary>=2.9.9
+Requires-Dist: greenlet>=3.1.0
+Requires-Dist: redis[hiredis]>=5.1.0
+Requires-Dist: aioredis>=2.0.1
+Requires-Dist: celery[redis]>=5.4.0
+Requires-Dist: flower>=2.0.1
+Requires-Dist: kombu>=5.3.0
+Requires-Dist: billiard>=4.2.0
+Requires-Dist: langchain>=0.3.0
+Requires-Dist: langchain-core>=0.3.0
+Requires-Dist: langchain-community>=0.3.0
+Requires-Dist: langchain-text-splitters>=0.3.0
+Requires-Dist: langgraph>=0.2.0
+Requires-Dist: langgraph-checkpoint>=1.0.0
+Requires-Dist: langsmith>=0.1.0
+Requires-Dist: langchain-openai>=0.2.0
+Requires-Dist: langchain-anthropic>=0.2.0
+Requires-Dist: langchain-google-genai>=2.0.0
+Requires-Dist: langchain-ollama>=0.2.0
+Requires-Dist: openai>=1.52.0
+Requires-Dist: anthropic>=0.36.0
+Requires-Dist: google-generativeai>=0.8.0
+Requires-Dist: ollama>=0.3.0
+Requires-Dist: dashscope>=1.20.0
+Requires-Dist: zhipuai>=2.1.0
+Requires-Dist: together>=1.3.0
+Requires-Dist: tiktoken>=0.8.0
+Requires-Dist: sentence-transformers>=3.2.0
+Requires-Dist: langchain-huggingface>=0.1.0
+Requires-Dist: FlagEmbedding>=1.2.0
+Requires-Dist: transformers>=4.45.0
+Requires-Dist: torch>=2.4.0
+Requires-Dist: einops>=0.8.0
+Requires-Dist: pymilvus>=2.4.0
+Requires-Dist: chromadb>=0.5.0
+Requires-Dist: qdrant-client>=1.12.0
+Requires-Dist: pgvector>=0.3.0
+Requires-Dist: pypdf>=5.0.0
+Requires-Dist: pdfplumber>=0.11.0
+Requires-Dist: pymupdf>=1.24.0
+Requires-Dist: pdfminer.six>=20231228
+Requires-Dist: python-docx>=1.1.0
+Requires-Dist: python-pptx>=1.0.0
+Requires-Dist: openpyxl>=3.1.0
+Requires-Dist: xlrd>=2.0.1
+Requires-Dist: beautifulsoup4>=4.12.0
+Requires-Dist: lxml>=5.3.0
+Requires-Dist: html2text>=2024.2.26
+Requires-Dist: markdown>=3.7
+Requires-Dist: markdownify>=0.13.0
+Requires-Dist: unstructured[all-docs]>=0.15.0
+Requires-Dist: python-magic>=0.4.27
+Requires-Dist: chardet>=5.2.0
+Requires-Dist: pytesseract>=0.3.13
+Requires-Dist: pillow>=10.4.0
+Requires-Dist: easyocr>=1.7.0
+Requires-Dist: nltk>=3.9.0
+Requires-Dist: jieba>=0.42.1
+Requires-Dist: langdetect>=1.0.9
+Requires-Dist: regex>=2024.9.11
+Requires-Dist: elasticsearch[async]>=8.15.0
+Requires-Dist: rank-bm25>=0.2.2
+Requires-Dist: minio>=7.2.0
+Requires-Dist: boto3>=1.35.0
+Requires-Dist: aioboto3>=13.1.0
+Requires-Dist: pydantic>=2.9.0
+Requires-Dist: pydantic-settings>=2.5.0
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: email-validator>=2.2.0
+Requires-Dist: requests>=2.32.0
+Requires-Dist: aiohttp>=3.10.0
+Requires-Dist: tenacity>=9.0.0
+Requires-Dist: python-dateutil>=2.9.0
+Requires-Dist: pytz>=2024.2
+Requires-Dist: orjson>=3.10.0
+Requires-Dist: ujson>=5.10.0
+Requires-Dist: shortuuid>=1.0.13
+Requires-Dist: nanoid>=2.0.0
+Requires-Dist: jinja2>=3.1.4
+Requires-Dist: pyyaml>=6.0.2
+Requires-Dist: toml>=0.10.2
+Requires-Dist: cachetools>=5.5.0
+Requires-Dist: apscheduler>=3.10.4
+Requires-Dist: prometheus-fastapi-instrumentator>=7.0.0
+Requires-Dist: opentelemetry-api>=1.27.0
+Requires-Dist: opentelemetry-sdk>=1.27.0
+Requires-Dist: opentelemetry-instrumentation-fastapi>=0.48b0
+Requires-Dist: opentelemetry-exporter-jaeger>=1.21.0
+Requires-Dist: sentry-sdk[fastapi]>=2.16.0
+Requires-Dist: loguru>=0.7.2
+Provides-Extra: test
+Requires-Dist: pytest>=8.3.0; extra == "test"
+Requires-Dist: pytest-asyncio>=0.24.0; extra == "test"
+Requires-Dist: pytest-cov>=5.0.0; extra == "test"
+Requires-Dist: pytest-mock>=3.14.0; extra == "test"
+Requires-Dist: faker>=30.0.0; extra == "test"
+Requires-Dist: factory-boy>=3.3.0; extra == "test"
+Requires-Dist: respx>=0.21.0; extra == "test"
+Requires-Dist: httpx>=0.27.0; extra == "test"
+Provides-Extra: dev
+Requires-Dist: black>=24.10.0; extra == "dev"
+Requires-Dist: isort>=5.13.0; extra == "dev"
+Requires-Dist: flake8>=7.1.0; extra == "dev"
+Requires-Dist: mypy>=1.11.0; extra == "dev"
+Requires-Dist: pylint>=3.3.0; extra == "dev"
+Requires-Dist: pre-commit>=4.0.0; extra == "dev"
+Requires-Dist: ruff>=0.7.0; extra == "dev"
+Requires-Dist: types-redis>=4.6.0; extra == "dev"
+Requires-Dist: types-requests>=2.32.0; extra == "dev"
+Requires-Dist: types-PyYAML>=6.0.0; extra == "dev"
+Requires-Dist: types-python-dateutil>=2.9.0; extra == "dev"
+Requires-Dist: ipython>=8.28.0; extra == "dev"
+Requires-Dist: ipdb>=0.13.13; extra == "dev"
+Requires-Dist: watchfiles>=0.24.0; extra == "dev"
+Requires-Dist: rich>=13.9.0; extra == "dev"
+Requires-Dist: typer>=0.12.0; extra == "dev"
+Requires-Dist: west-pacific-petrochemical-platform[test]; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: mkdocs>=1.6.0; extra == "docs"
+Requires-Dist: mkdocs-material>=9.5.0; extra == "docs"
+Requires-Dist: mkdocstrings[python]>=0.26.0; extra == "docs"
+Provides-Extra: all
+Requires-Dist: west-pacific-petrochemical-platform[test]; extra == "all"
+Requires-Dist: west-pacific-petrochemical-platform[dev]; extra == "all"
+Requires-Dist: west-pacific-petrochemical-platform[docs]; extra == "all"
+
+# West Pacific Petrochemical
+
+项目骨架：后端 (FastAPI) + 前端 (Vue3) + 部署配置。
+
+## 目录结构
+
+```
+├── backend/          # 后端 (FastAPI)
+│   ├── app/
+│   │   ├── api/      # API 路由 (v1: auth, apps, chat, datasets, workflows, agents, models, files)
+│   │   ├── core/     # 核心：LLM、RAG、工作流、Agent、工具
+│   │   ├── services/ # 业务服务
+│   │   ├── models/   # 数据模型 (db + schema)
+│   │   ├── infrastructure/ # 数据库、缓存、向量库、存储、MQ
+│   │   └── utils/
+│   ├── tests/
+│   ├── main.py
+│   ├── config.py
+│   └── requirements.txt
+├── frontend/         # 前端 (Vue3)
+│   └── src/
+│       ├── views/    # Studio, Workflow, Dataset, ChatWindow
+│       ├── components/
+│       └── stores/
+└── deploy/           # 部署
+    ├── docker-compose.yml
+    ├── docker-compose.prod.yml
+    ├── k8s/
+    └── nginx/
+```
+
+## 快速开始
+
+### 后端
+
+```bash
+cd backend
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+### 前端
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 使用 Docker
+
+```bash
+cd deploy
+docker-compose up -d
+```
+
+## 环境变量
+
+**配置方式**：主配置使用 **YAML**（`backend/config.yaml`，可复制 `config.yaml.example`）。敏感项用环境变量或 `.env` 覆盖（如 `DATABASE_URL`、`JWT_SECRET_KEY`），不必写进 YAML。
+
+- **DATABASE_URL**：PostgreSQL 连接串（需已安装 [pgvector](https://github.com/pgvector/pgvector) 扩展，启动时会自动执行 `CREATE EXTENSION IF NOT EXISTS vector`）。
+
+启动后可用接口自检：
+
+- `GET /health` — 存活
+- `GET /api/v1/health` — v1 存活
+- `GET /api/v1/db-check` — 数据库与 pgvector 是否可用
