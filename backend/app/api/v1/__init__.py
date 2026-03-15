@@ -4,12 +4,13 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_db
-from app.api.v1 import auth, users
+from app.api.v1 import auth, chat, users
 
 router = APIRouter(prefix="/api/v1", tags=["v1"])
 
 router.include_router(auth.router)
 router.include_router(users.router)
+router.include_router(chat.router)
 
 
 @router.get("/health")

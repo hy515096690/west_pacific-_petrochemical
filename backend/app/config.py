@@ -49,7 +49,7 @@ def _build_settings(raw: dict) -> SimpleNamespace:
         minio_access_key=storage.get("minio_access_key", ""),
         minio_secret_key=storage.get("minio_secret_key", ""),
         minio_bucket=storage.get("minio_bucket", "default"),
-        secret_key=jwt.get("secret_key", "change-me-in-production"),
+        secret_key=jwt.get("secret_key", "change-me-in-production-min-32-chars"),
         algorithm=jwt.get("algorithm", "HS256"),
         access_token_expire_minutes=int(jwt.get("access_token_expire_minutes", 60)),
     )

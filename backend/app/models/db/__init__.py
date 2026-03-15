@@ -3,10 +3,11 @@ from app.infrastructure.database.base import Base
 from app.models.db.user import User
 from app.models.db.dataset import Dataset
 from app.models.db.api_key import ApiKey
+from app.models.db.chat_model import ChatModel
 
 try:
     from app.models.db.document_chunk import DocumentChunk
 except ImportError:
     DocumentChunk = None  # pgvector 未安装时无向量表
 
-__all__ = ["Base", "User", "Dataset", "ApiKey"] + (["DocumentChunk"] if DocumentChunk is not None else [])
+__all__ = ["Base", "User", "Dataset", "ApiKey", "ChatModel"] + (["DocumentChunk"] if DocumentChunk is not None else [])

@@ -28,7 +28,8 @@ storage:
   minio_secret_key: ""
   minio_bucket: "default"
 
+# 生产环境务必改为随机长字符串，且不少于 32 字符（避免 InsecureKeyLengthWarning）
 jwt:
-  secret_key: "change-me-in-production"
+  secret_key: "change-me-in-production-min-32-chars"
   algorithm: "HS256"
   access_token_expire_minutes: 60
