@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 """
-可执行脚本：运行「用户输入 -> 大模型回复」测试工作流。
+可执行脚本：Human-in-the-Loop 测试工作流。
 
-依赖：需已安装 langchain-openai、langchain-core（项目根 pip install -e . 或 backend 的依赖）。
+流程：第一步用户输入 -> 第二步大模型回复 -> 第三步用户再输入 -> 第四步大模型回复。
+用户两次输入均在控制台进行。
 
 用法：
-  # 在 backend 目录下（推荐）
   cd backend
   set OPENAI_API_KEY=sk-xxx
   python scripts/run_workflow_user_llm.py
-  python scripts/run_workflow_user_llm.py --message "你好，介绍一下你自己"
 
-  # 在项目根目录下
-  python backend/scripts/run_workflow_user_llm.py --message "你好"
+  # 指定 API 地址（可选）
+  set OPENAI_BASE_URL=https://api.xxx.com/v1
+  python scripts/run_workflow_user_llm.py
 """
-import argparse
 import os
 import sys
 
@@ -29,9 +28,9 @@ GRAPH = {
         {
             "id": "n_llm",
             "type": "llm",
-            "name": "gpt-5.2",
+            "name": "大模型",
             "config": {
-                "model_name": os.environ.get("WORKFLOW_MODEL", "gpt-5.2"),
+                "model_name": os.environ.get("WORKFLOW_MODEL", "gpt-3.5-turbo"),
                 "temperature": 0.7,
                 "max_tokens": 512,
             },
@@ -45,36 +44,63 @@ GRAPH = {
 }
 
 
-def main():
-    parser = argparse.ArgumentParser(description="运行测试工作流：用户输入 -> 大模型回复")
-    parser.add_argument("--message", "-m", default="你好，请用一句话介绍你自己。", help="用户输入内容")
-    # parser.add_argument("--api-key", default=os.environ.get("WORKFLOW_TEST_API_KEY") or os.environ.get("OPENAI_API_KEY"), help="API Key")
-    # parser.add_argument("--base-url", default=os.environ.get("OPENAI_BASE_URL"), help="API Base URL（可选）")
-    parser.add_argument("--api-key", default="sk-piwdGQDA5K3hLYW_POzGx7_YKniTqEilSrQ0CjySBMx8L_IbYMgjvHdpfeU", help="API Key")
-    parser.add_argument("--base-url", default="https://api.htzl.com.cn:30000/v1", help="API Base URL（可选）")
-    args = parser.parse_args()
+def run_one_round(messages: list[dict], runtime: dict) -> str:
+    """执行一轮：用当前 messages 跑图，返回大模型回复文本。"""
+    state = run_graph(GRAPH, {"messages": messages}, runtime=runtime)
+    if "error" in state.get("n_llm", {}):
+        raise RuntimeError(state["n_llm"]["error"])
+    return (state.get("n_llm") or {}).get("text", "")
 
-    if not args.api_key:
-        print("请设置 OPENAI_API_KEY 或使用 --api-key 传入。", file=sys.stderr)
+
+def main():
+    api_key = "sk-piwdGQDA5K3hLYW_POzGx7_YKniTqEilSrQ0CjySBMx8L_IbYMgjvHdpfeU"
+    base_url = "https://api.htzl.com.cn:30000/v1"
+    if not api_key:
+        print("请设置环境变量 OPENAI_API_KEY 或 WORKFLOW_TEST_API_KEY。", file=sys.stderr)
         sys.exit(1)
 
-    inputs = {"messages": [{"role": "user", "content": args.message}]}
-    runtime = {"api_key": args.api_key}
-    if args.base_url:
-        runtime["base_url"] = args.base_url.rstrip("/")
+    runtime = {"api_key": api_key}
+    if base_url:
+        runtime["base_url"] = base_url.rstrip("/")
 
-    print("工作流运行中：用户输入 -> 大模型回复")
-    print("输入:", args.message)
-    print("-" * 40)
+    messages: list[dict] = []
 
-    state = run_graph(GRAPH, inputs, runtime=runtime)
+    print("=== Human-in-the-Loop：两轮对话（控制台输入）===\n")
 
-    if "error" in state.get("n_llm", {}):
-        print("错误:", state["n_llm"]["error"], file=sys.stderr)
-        sys.exit(2)
+    # 第一步：用户输入
+    try:
+        user1 = input("【第一步】请输入：").strip() or "你好"
+    except EOFError:
+        user1 = "你好"
+    messages.append({"role": "user", "content": user1})
+    messages.append({"role": "system", "content": "[角色]你是一名沈阳市旅游助手。"})
+    print("messages: ", messages)
+    print()
 
-    reply = state.get("n_llm", {}).get("text", "")
-    print("回复:", reply)
+    # 第二步：大模型回复
+    print("【第二步】大模型回复中...")
+    reply1 = run_one_round(messages, runtime)
+    print("回复：", reply1)
+    messages.append({"role": "assistant", "content": reply1})
+    print("messages: ", messages)
+    print()
+
+    # 第三步：用户根据大模型结果再输入
+    try:
+        user2 = input("【第三步】请根据上文再输入：").strip() or "谢谢"
+    except EOFError:
+        user2 = "谢谢"
+    messages.append({"role": "user", "content": user2})
+    print("messages: ", messages)
+    print()
+
+    # 第四步：大模型再次回复
+    print("【第四步】大模型回复中...")
+    reply2 = run_one_round(messages, runtime)
+    print("messages: ", messages)
+    print("回复：", reply2)
+
+    print("\n=== 两轮对话结束 ===")
     return 0
 
 
